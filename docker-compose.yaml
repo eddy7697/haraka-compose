@@ -1,7 +1,19 @@
+version: '3.8'
+
 services:
   haraka:
+    image: node:16  # 使用 Node.js 作為基礎鏡像
+    container_name: haraka_server
     ports:
-      - 25:25
+      - "25:25"         # SMTP 服務端口
+      - "587:587"       # 可選，Submission 端口
     volumes:
-      - config/smtp.ini:/etc/haraka/config/smtp.ini
-    image: 'instrumentisto/haraka:latest'
+      - ./data:/haraka  # 將配置和數據掛載到主機目錄
+    working_dir: /haraka
+    command: >
+      sh -c "
+      npm install -g Haraka &&
+      haraka -i . &&
+      npm install &&
+      haraka -c ."
+    restart: unless-stopped
