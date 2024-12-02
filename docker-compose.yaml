@@ -1,0 +1,7 @@
+services:
+  haraka:
+    ports:
+      - '25:25'
+    volumes:
+      - '/path/to/my/smtp.ini:/etc/haraka/config/smtp.ini:ro'
+    image: 'instrumentisto/haraka:latest'
