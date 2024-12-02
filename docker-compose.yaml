@@ -3,5 +3,5 @@ services:
     ports:
       - '25:25'
     volumes:
-      - 'config/smtp.ini:/etc/haraka/config/smtp.ini:ro'
+      - 'config/smtp.ini:/etc/haraka/config/smtp.ini'
     image: 'instrumentisto/haraka:latest'
