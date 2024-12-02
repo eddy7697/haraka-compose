@@ -2,18 +2,13 @@ version: '3.8'
 
 services:
   haraka:
-    image: node:16  # 使用 Node.js 作為基礎鏡像
+    image: haraka/haraka    # 官方 Haraka Docker 映像
     container_name: haraka_server
     ports:
-      - "30:25"         # SMTP 服務端口
-      - "587:587"       # 可選，Submission 端口
+      - "30:25"             # SMTP 服務端口
+      - "587:587"           # 可選的 Submission 端口
     volumes:
-      - ./data:/haraka  # 將配置和數據掛載到主機目錄
-    working_dir: /haraka
-    command: >
-      sh -c "
-      npm install -g Haraka &&
-      haraka -i . &&
-      npm install &&
-      haraka -c ."
+      - ./data:/data        # 配置目錄掛載到主機
+    environment:
+      HARAKA_CONFIG: /data  # 指定 Haraka 的配置目錄
     restart: unless-stopped
